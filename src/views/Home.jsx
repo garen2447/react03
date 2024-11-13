@@ -1,12 +1,11 @@
-// src/App.jsx
-
 import React, { useState, useEffect } from 'react';
 import WhiskyCard from '../components/WhiskyCard';
-import './App.css';
+import '../App.css';
 import { fetchWhiskys } from '../components/whiskydata';
-import db from "./config/firebase.js"
+import db from "../config/firebase.js"
+import { AppRouter } from '../router/Router.jsx';
 
-function App() {
+function Home() {
   const [whiskys, setWhiskys] = useState([]); // Estado para almacenar los whiskys
   const [loading, setLoading] = useState(true); // Estado para controlar la carga
   const [error, setError] = useState(null); // Estado para errores, si los hubiera
@@ -47,4 +46,4 @@ function App() {
   );
 }
 
-export default App;
+export { Home } ;
