@@ -3,7 +3,6 @@ import WhiskyCard from '../components/WhiskyCard';
 import '../App.css';
 import { fetchWhiskys } from '../components/whiskydata';
 import db from "../config/firebase.js"
-import { AppRouter } from '../router/Router.jsx';
 
 function Home() {
   const [whiskys, setWhiskys] = useState([]); // Estado para almacenar los whiskys
@@ -46,4 +45,4 @@ function Home() {
   );
 }
 
-export { Home } ;
+export default Home ;

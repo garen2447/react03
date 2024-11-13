@@ -1,7 +1,12 @@
-const Dashboard = () => {
-    return (
-        <h1>Dashboard</h1>
-    )
-} 
+import React from 'react';
 
-export { Dashboard }
+const Dashboard = () => {
+  return (
+    <div>
+      <h2>Bienvenido al Dashboard</h2>
+      <p>Esta página es restringida y solo accesible para usuarios autenticados.</p>
+    </div>
+  );
+};
+
+export default Dashboard ;
