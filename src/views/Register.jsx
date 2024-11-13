@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
-import auth from '../config/firebase';  // Asegúrate de que 'auth' esté siendo importado correctamente
 import { useNavigate } from 'react-router-dom';
 import { doc, setDoc } from 'firebase/firestore';
-import db from '../config/firebase';  // Asegúrate de que 'db' esté siendo importado correctamente
+// Register.jsx
+import firebase from '../config/firebase';
+
+// Access db and auth from the default import
+const { auth, db } = firebase;
+
 
 const Register = () => {
   const [firstName, setFirstName] = useState('');
@@ -17,48 +21,47 @@ const Register = () => {
   const handleRegister = async (e) => {
     e.preventDefault();
     setLoading(true);
-    console.log("Formulario de registro enviado");
+    setError('');  // Limpiar el mensaje de error antes de iniciar el proceso
 
     try {
-      // Paso 1: Verifica que auth esté correctamente importado
-      console.log("Creando usuario con email:", email);
-      console.log("Configuración de auth:", auth);
+      // Verifica si 'auth' está correctamente configurado
+      console.log("Instancia de auth:", auth);
 
+      // Paso 1: Crear usuario con email y contraseña
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
-      console.log("Usuario creado con éxito:", user);
 
       // Paso 2: Actualizar el perfil del usuario
       await updateProfile(user, {
         displayName: `${firstName} ${lastName}`,
       });
-      console.log("Perfil actualizado");
 
-      // Paso 3: Guardar datos en Firestore
-      await setDoc(doc(db, "users", user.uid), {
+      // Paso 3: Guardar información adicional en Firestore
+      await setDoc(doc(db, 'users', user.uid), {
         firstName,
         lastName,
         email,
         createdAt: new Date(),
       });
-      console.log("Datos guardados en Firestore");
 
       // Paso 4: Redirigir al Dashboard
       navigate('/dashboard');
-      console.log("Redirigiendo al Dashboard...");
     } catch (err) {
-      console.error("Error al registrar usuario:", err);  // Muestra el error detallado
-
-      if (err.code === 'auth/email-already-in-use') {
-        setError('Este correo electrónico ya está en uso. Intenta con otro.');
-      } else if (err.code === 'auth/weak-password') {
-        setError('La contraseña debe tener al menos 6 caracteres.');
-      } else {
-        setError('Hubo un error al registrar. Por favor, intenta nuevamente.');
-      }
+      console.error('Error al registrar usuario:', err);
+      setError(getErrorMessage(err));  // Mensaje de error más detallado
     } finally {
       setLoading(false);
-      console.log("Proceso de registro finalizado");
+    }
+  };
+
+  // Función para obtener un mensaje de error más legible
+  const getErrorMessage = (error) => {
+    if (error.code === 'auth/email-already-in-use') {
+      return 'Este correo electrónico ya está en uso. Intenta con otro.';
+    } else if (error.code === 'auth/weak-password') {
+      return 'La contraseña debe tener al menos 6 caracteres.';
+    } else {
+      return 'Hubo un error al registrar. Por favor, intenta nuevamente.';
     }
   };
 
