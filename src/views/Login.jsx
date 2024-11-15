@@ -3,8 +3,9 @@ import React, { useState } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';  // Para redirigir al dashboard después de un login exitoso
 import firebase from '../config/firebase';
+import Header from '../components/Header';  // Importa el Header
 
-// Access db and auth from the default import
+// Accede al objeto auth de Firebase
 const { auth } = firebase;
 
 const Login = () => {
@@ -23,7 +24,7 @@ const Login = () => {
       await signInWithEmailAndPassword(auth, email, password);  // Firebase authentication
 
       // Redirige al Dashboard si el login es exitoso
-      navigate('/dashboard');  
+      navigate('/dashboard');
     } catch (err) {
       // Manejo de errores específicos de Firebase
       if (err.code === 'auth/user-not-found') {
@@ -40,34 +41,77 @@ const Login = () => {
 
   return (
     <div>
-      <h2>Login</h2>
-      {error && <div style={{ color: 'red' }}>{error}</div>}  {/* Mostrar el error si existe */}
+      {/* Agregamos el Header en la vista de Login */}
+      <Header />
 
-      <form onSubmit={handleLogin}>
-        <div>
-          <label>Email</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}  // Actualiza el estado del email
-            required
-          />
-        </div>
-        <div>
-          <label>Contraseña</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}  // Actualiza el estado de la contraseña
-            required
-          />
-        </div>
-        <button type="submit" disabled={loading}>
-          {loading ? 'Cargando...' : 'Iniciar sesión'}
-        </button>
-      </form>
+      <div className="container is-fluid">
+        <div className="columns is-centered">
+          <div className="column is-half">
+            <div className="box">
+              <h2 className="title is-4 has-text-centered">Iniciar sesión</h2>
 
-      <p>No tienes una cuenta? <a href="/register">Regístrate</a></p>  {/* Enlace para registro */}
+              {error && (
+                <div className="notification is-danger">
+                  <button className="delete" onClick={() => setError('')}></button>
+                  {error}
+                </div>
+              )}
+
+              <form onSubmit={handleLogin}>
+                {/* Campo de Email */}
+                <div className="field">
+                  <label className="label">Email</label>
+                  <div className="control">
+                    <input
+                      className="input"
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
+                      placeholder="Introduce tu email"
+                    />
+                  </div>
+                </div>
+
+                {/* Campo de Contraseña */}
+                <div className="field">
+                  <label className="label">Contraseña</label>
+                  <div className="control">
+                    <input
+                      className="input"
+                      type="password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      required
+                      placeholder="Introduce tu contraseña"
+                    />
+                  </div>
+                </div>
+
+                {/* Botón de Iniciar sesión */}
+                <div className="field">
+                  <div className="control">
+                    <button
+                      className={`button is-primary is-fullwidth ${loading ? 'is-loading' : ''}`}
+                      type="submit"
+                      disabled={loading}
+                    >
+                      {loading ? 'Cargando...' : 'Iniciar sesión'}
+                    </button>
+                  </div>
+                </div>
+              </form>
+
+              <p className="has-text-centered">
+                ¿No tienes una cuenta?{' '}
+                <a href="/register" className="has-text-link">
+                  Regístrate
+                </a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

@@ -1,0 +1,7 @@
+/* src/components/Header.css */
+
+/* Aseguramos que el color sea blanco solo al hacer hover */
+.navbar-item:hover {
+    color: white !important;
+  }
+  
