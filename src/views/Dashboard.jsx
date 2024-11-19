@@ -65,9 +65,9 @@ const Dashboard = () => {
                   <p className="subtitle is-5">Este es tu dashboard, desde aquí puedes gestionar tu cuenta.</p>
                 </div>
 
-                <div className="has-text-centered mt-5"> {/* Agregado mt-5 para margen superior */}
+                <div className="has-text-centered mt-5"> 
                   <button 
-                    className="button is-danger is-medium" // Botón más pequeño
+                    className="button is-danger is-medium" 
                     onClick={handleLogout}
                   >
                     <strong>Cerrar sesión</strong>

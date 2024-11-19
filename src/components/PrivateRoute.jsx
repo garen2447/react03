@@ -1,8 +1,7 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom'; // Importa useNavigate
+import { useNavigate } from 'react-router-dom'; 
 import { useAuthState } from 'react-firebase-hooks/auth';
-// Importa el objeto completo desde firebase.js (usando la exportación por defecto)
-import firebase from '../config/firebase'; // Importamos el objeto completo
+import firebase from '../config/firebase'; 
 
 const PrivateRoute = ({ children }) => {
   const { auth } = firebase; // Desestructuramos `auth` del objeto importado
@@ -10,30 +9,42 @@ const PrivateRoute = ({ children }) => {
   const navigate = useNavigate(); // Usamos navigate para redirigir a otras páginas
 
   if (loading) {
-    return <div className="has-text-centered">Cargando...</div>; // Muestra un indicador de carga mientras se verifica el estado de autenticación
+    return (
+      <div className="has-text-centered">
+        <div className="spinner-container">
+          <div className="spinner"></div>
+        </div>
+        <p>Cargando...</p>
+      </div>
+    );
   }
 
   if (error) {
     console.error("Error de autenticación:", error);
-    return <div className="has-text-danger has-text-centered">Error en la autenticación</div>; // Muestra un mensaje de error si ocurre un problema con la autenticación
+    return (
+      <div className="notification is-danger is-light has-text-centered">
+        <h3 className="title is-4">¡Oops! Hubo un problema al verificar tu autenticación.</h3>
+        <p>Por favor, intenta nuevamente más tarde.</p>
+      </div>
+    ); 
   }
 
-  // Si el usuario no está autenticado, muestra un mensaje de "No autorizado" y los botones
   if (!user) {
     return (
       <div className="section is-medium">
-        <div className="notification is-danger">
-          <h3 className="title is-4">No estás autorizado para ver esta página.</h3>
+        <div className="notification is-warning is-light has-text-centered">
+          <h3 className="title is-4">Acceso no autorizado</h3>
+          <p>No estás autorizado para ver esta página. Por favor, inicia sesión o regístrate para continuar.</p>
         </div>
-        <div className="buttons is-centered is-inline-flex">
+        <div className="buttons is-centered">
           <button 
-            className="button is-primary is-small mr-2" 
+            className="button is-primary is-medium" 
             onClick={() => navigate("/login")}
           >
             Ir al Login
           </button>
           <button 
-            className="button is-link is-small" 
+            className="button is-link is-medium" 
             onClick={() => navigate("/register")}
           >
             Ir al Registro

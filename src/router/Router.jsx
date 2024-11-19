@@ -1,12 +1,10 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "../views/Login.jsx";
 import Home from "../views/Home.jsx";
-import Dashboard from "../views/Dashboard.jsx"; // Importa la página restringida
-import PrivateRoute from "../components/PrivateRoute.jsx"; // Importa el componente PrivateRoute
-import Register from "../views/Register.jsx"; // Componente de Registro
-
-// Importa el componente de error 404
-import NotFound from "../views/NotFound.jsx"; // Crea esta vista para el error 404
+import Dashboard from "../views/Dashboard.jsx"; 
+import PrivateRoute from "../components/PrivateRoute.jsx"; 
+import Register from "../views/Register.jsx"; 
+import NotFound from "../views/NotFound.jsx";
 
 const AppRouter = () => {
   return (

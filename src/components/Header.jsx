@@ -1,7 +1,6 @@
-// src/components/Header.jsx
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './Header.css';  // Importa el archivo CSS para los estilos personalizados
+import './Header.css';  
 
 
 const Header = ({ children }) => {
@@ -10,7 +9,7 @@ const Header = ({ children }) => {
       {/* Header común para todas las páginas */}
       <header className="navbar is-primary">
         <div className="navbar-brand">
-          <Link to="/" className="navbar-item">Mi App</Link>
+          <Link to="/" className="navbar-item">Whisky App</Link>
         </div>
         <div className="navbar-menu">
           <div className="navbar-start">
@@ -22,9 +21,9 @@ const Header = ({ children }) => {
         </div>
       </header>
 
-      {/* Aquí es donde se renderizan las rutas (contenido de la página) */}
+  
       <main className="section">
-        {children}  {/* Renderizamos el contenido de la página actual aquí */}
+        {children}  
       </main>
     </div>
   );

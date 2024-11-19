@@ -4,7 +4,7 @@ const WhiskyCard = ({ whisky }) => {
   return (
     <div className="card has-background-light shadow-sm" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
       {/* Imagen de la tarjeta */}
-      <div className="card-image" style={{ marginTop: '10px' }}> {/* Aquí agregamos un margen superior */}
+      <div className="card-image" style={{ marginTop: '10px' }}> 
         <figure className="image" style={{ width: '100px', height: '133px', margin: '0 auto' }}>
           <img src={whisky.foto} alt={whisky.nombre} style={{ objectFit: 'cover' }} />
         </figure>
